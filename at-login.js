@@ -19,6 +19,15 @@ class AtLogin extends ExternalEntitiesAuth {
           display: flex;
         }
 
+        .container-input-with-fill {
+          background-color: #f2f2f2; 
+          padding: 0.5em;
+          padding-left: 1em;
+          border-radius: 1em;
+          margin-right: -1em;
+          margin-left: -1em;
+        }
+
         .container-checkbox {
           display: none;
         }
@@ -52,9 +61,15 @@ class AtLogin extends ExternalEntitiesAuth {
           margin-left: 1%;
           width: 49%;
         }
-      </style>
 
-      <div class="container-input">
+        #atLogoContainer > img {
+          height: 80%;
+          width: 80%;
+          padding-left: 1em;
+          padding-top: 0.5em;
+        }
+      </style>
+      <div class$="container-input [[_getContainerClass(withFill)]]">
         <paper-input
           id="entityUsername"
           class="login-input"
@@ -76,6 +91,11 @@ class AtLogin extends ExternalEntitiesAuth {
           auto-validate
         >
         </paper-input>
+        <template is="dom-if" if="[[withLogo]]">
+          <div id="atLogoContainer">
+            <img src="https://ifrru.ihru.pt/o/IFRRU-theme/images/logo_AT.svg"/>
+          </div>
+        </template>
       </div>
       <div id="containerCheckbox" class="container-checkbox">
         <paper-checkbox id="submittedByAccountant" checked="{{submittedByAccountant}}">
@@ -168,6 +188,14 @@ class AtLogin extends ExternalEntitiesAuth {
       withAccountantPassword: {
         type: Boolean,
         value: false
+      },
+      withLogo: {
+        type: Boolean,
+        value: true
+      },
+      withFill: {
+        type: Boolean,
+        value: true
       }
     };
   }
@@ -294,6 +322,10 @@ class AtLogin extends ExternalEntitiesAuth {
       this.$.entityUsername.disabled = false;
       this.$.entityPassword.disabled = false;
     }
+  }
+
+  _getContainerClass(withFill){
+    return withFill ? "container-input-with-fill" : "container-input";
   }
 }
 
